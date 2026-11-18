@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mon rapport de stage, mode d'emploi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f3ee; --ink:#1d1b19; --muted:#6b655e; --card:#fff;
+    --a:#ff5a36; --b:#2a6df4; --c:#14a37f; --d:#f2b705; --e:#8a4fff;
+    --line:#e4ded5; --r:16px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif}
+  h1,h2,h3{font-family:"Bricolage Grotesque",Inter,sans-serif;line-height:1.15;margin:0 0 .4em}
+  .wrap{max-width:980px;margin:0 auto;padding:24px 18px 80px}
+  header.hero{background:var(--ink);color:#fff;border-radius:24px;padding:36px 28px;position:relative;overflow:hidden}
+  header.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800}
+  header.hero p{max-width:620px;color:#dcd6cf;margin:.3em 0}
+  .tag{display:inline-block;background:var(--a);color:#fff;font-weight:600;font-size:.8rem;padding:4px 10px;border-radius:99px;margin-bottom:14px}
+  .blob{position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:var(--a);opacity:.9}
+  .blob2{position:absolute;right:90px;bottom:-80px;width:160px;height:160px;border-radius:50%;background:var(--d)}
+  .hero > *:not(.blob):not(.blob2){position:relative}
+  nav.tabs{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:8px;overflow-x:auto;padding:14px 0;margin-top:10px}
+  nav.tabs button{flex:0 0 auto;border:2px solid var(--ink);background:#fff;color:var(--ink);font:600 .95rem Inter,sans-serif;padding:8px 14px;border-radius:99px;cursor:pointer}
+  nav.tabs button.on{background:var(--ink);color:#fff}
+  section.view{display:none;animation:fade .25s ease}
+  section.view.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin:14px 0}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .step{border-radius:var(--r);padding:18px;color:#fff}
+  .step b{font-family:"Bricolage Grotesque";font-size:1.4rem;display:block}
+  .muted{color:var(--muted)}
+  .part{border-left:8px solid var(--b)}
+  .part summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;font-weight:600;font-size:1.1rem}
+  .part summary::-webkit-details-marker{display:none}
+  .num{flex:0 0 auto;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:"Bricolage Grotesque";font-weight:800}
+  .part ul{margin:.6em 0 0 0;padding-left:1.2em}
+  .part li{margin:.25em 0}
+  .photo-hint{background:#fff6e0;border-radius:10px;padding:10px 12px;margin-top:12px;font-size:.95rem}
+  textarea, input[type=text]{width:100%;border:2px solid var(--line);border-radius:10px;padding:10px;font:inherit;background:#fcfbf9;resize:vertical}
+  textarea:focus,input:focus{outline:none;border-color:var(--b)}
+  label.small{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+  .check{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;cursor:pointer;border:1px solid var(--line);background:#fff;margin:6px 0}
+  .check input{width:20px;height:20px;margin-top:2px;accent-color:var(--c)}
+  .check.done{background:#e8f7f1;border-color:#b6e5d4}
+  .bar{height:12px;background:#e9e4dc;border-radius:99px;overflow:hidden;margin:6px 0 2px}
+  .bar i{display:block;height:100%;background:var(--c);width:0;transition:width .3s}
+  .warn{border-left:8px solid var(--a)}
+  .days{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .days button{border:2px solid var(--b);background:#fff;color:var(--b);font-weight:600;padding:6px 12px;border-radius:10px;cursor:pointer}
+  .days button.on{background:var(--b);color:#fff}
+  .slide{display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:12px;background:#fff;border:1px solid var(--line);margin:8px 0}
+  .slide .n{flex:0 0 auto;background:var(--e);color:#fff;font-weight:800;border-radius:10px;padding:6px 10px;font-family:"Bricolage Grotesque"}
+  .slide .t{font-size:.85rem;color:var(--muted);white-space:nowrap}
+  .timer{font-family:"Bricolage Grotesque";font-size:4rem;font-weight:800;text-align:center;margin:10px 0}
+  .btn{border:none;border-radius:12px;padding:10px 16px;font:600 1rem Inter,sans-serif;cursor:pointer;color:#fff;background:var(--ink)}
+  .btn.alt{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .phase{font-weight:600;text-align:center;min-height:1.5em}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;opacity:0;transition:opacity .3s;pointer-events:none}
+  .toast.on{opacity:1}
+  .pill{display:inline-block;font-size:.8rem;font-weight:600;padding:2px 8px;border-radius:99px;background:#eee;margin-left:6px}
+  em.q{font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="blob"></div><div class="blob2"></div>
+  <span class="tag">3e prépa-métiers</span>
+  <h1>Ton stage, ton rapport, ton oral</h1>
+  <p>Au retour du stage, tu présentes ce que tu as vu et fait, avec tes photos. Pas besoin de faire un roman : tu racontes <b>ton</b> stage.</p>
+  <p class="muted" style="color:#bdb5ab">Tes notes restent sur cet ordinateur. Pense à les copier de temps en temps (onglet « mes notes »).</p>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-v="plan" class="on">Le plan</button>
+  <button data-v="parties">Les 6 parties</button>
+  <button data-v="photos">Mission photos</button>
+  <button data-v="jours">Jour par jour</button>
+  <button data-v="oral">L'oral</button>
+  <button data-v="notes">Mes notes</button>
+</nav>
+
+<!-- PLAN -->
+<section class="view on" id="v-plan">
+  <h2>En 3 temps</h2>
+  <div class="grid">
+    <div class="step" style="background:var(--b)"><b>1. Avant</b>Tu lis les questions de l'onglet « les 6 parties ». Tu sais quoi observer et quoi demander.</div>
+    <div class="step" style="background:var(--c)"><b>2. Pendant</b>Tu prends des photos (avec autorisation) et tu notes chaque soir ce que tu as fait.</div>
+    <div class="step" style="background:var(--e)"><b>3. Après</b>Tu rédiges ton rapport et tu prépares ton oral avec tes meilleures photos.</div>
+  </div>
+
+  <div class="card">
+    <h3>Ce que contient le rapport</h3>
+    <p class="muted">Le modèle donné par ton professeur suit cet ordre :</p>
+    <div class="slide"><span class="n">0</span><div><b>Page de garde</b><br><span class="muted">ton nom, ta classe, le nom de l'entreprise, les dates, le tuteur, le professeur principal</span></div></div>
+    <div class="slide"><span class="n">+</span><div><b>Remerciements</b> <span class="pill">facultatif</span><br><span class="muted">un merci au tuteur, à l'équipe</span></div></div>
+    <div class="slide"><span class="n">1</span><div><b>Introduction</b><br><span class="muted">comment tu as trouvé ce stage et ce que tu en attendais</span></div></div>
+    <div class="slide"><span class="n">2</span><div><b>L'entreprise</b><br><span class="muted">ce qu'elle fait, son histoire, comment elle fonctionne</span></div></div>
+    <div class="slide"><span class="n">3</span><div><b>Le déroulé du stage</b><br><span class="muted">ce que tu as vu et fait, jour par jour</span></div></div>
+    <div class="slide"><span class="n">4</span><div><b>La fiche métier</b><br><span class="muted">le métier de ton tuteur, expliqué par lui</span></div></div>
+    <div class="slide"><span class="n">5</span><div><b>Conclusion</b><br><span class="muted">ce que tu as aimé, appris, et ce que ça change pour ton orientation</span></div></div>
+    <div class="slide"><span class="n">6</span><div><b>Annexes</b><br><span class="muted">photos, plan, documents que l'entreprise t'autorise à montrer</span></div></div>
+  </div>
+
+  <div class="card">
+    <h3>Où j'en suis</h3>
+    <div class="bar"><i id="progBar"></i></div>
+    <p class="muted" id="progTxt">0 % fait</p>
+  </div>
+</section>
+
+<!-- PARTIES -->
+<section class="view" id="v-parties">
+  <h2>Les 6 parties, question par question</h2>
+  <p class="muted">Clique sur une partie. Tu n'es pas obligé de répondre à tout : choisis les questions qui parlent de ton stage. Tu peux noter tes réponses directement.</p>
+  <div id="partsBox"></div>
+</section>
+
+<!-- PHOTOS -->
+<section class="view" id="v-photos">
+  <h2>Mission photos</h2>
+  <div class="card warn">
+    <h3>Les règles, avant de sortir ton téléphone</h3>
+    <ul>
+      <li>Tu demandes <b>toujours</b> l'autorisation à ton tuteur avant de prendre une photo.</li>
+      <li>Pas de visage sans l'accord de la personne. Pas de clients, pas de patients, pas d'enfants.</li>
+      <li>Pas d'écran d'ordinateur, de fichier client ou de document interne.</li>
+      <li>Tu prends des photos pendant les pauses ou quand on te le permet, pas en plein travail.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Les photos à rapporter</h3>
+    <p class="muted">Coche quand c'est fait. Objectif : au moins 6 photos utilisables pour l'oral.</p>
+    <div class="bar"><i id="photoBar"></i></div>
+    <p class="muted" id="photoTxt"></p>
+    <div id="photoBox"></div>
+  </div>
+  <div class="card">
+    <h3>Une bonne photo pour l'oral, c'est :</h3>
+    <ul>
+      <li>nette, prise à l'horizontale (comme un écran) ;</li>
+      <li>une seule chose à voir : un outil, un geste, un lieu ;</li>
+      <li>une photo que tu peux expliquer en une phrase : <em class="q">« ici, c'est le poste où je préparais... »</em></li>
+    </ul>
+  </div>
+</section>
+
+<!-- JOURS -->
+<section class="view" id="v-jours">
+  <h2>Jour par jour</h2>
+  <p class="muted">À remplir chaque soir du stage, 5 minutes suffisent. C'est la base de la partie « déroulé du stage ».</p>
+  <div class="card">
+    <div class="days" id="daysBtns"></div>
+    <label class="small">Ce que j'ai vu faire (observé)</label>
+    <textarea id="dObs" rows="3" placeholder="ex. le magasinier réceptionne une livraison et vérifie le bon"></textarea>
+    <label class="small">Ce que j'ai fait moi-même</label>
+    <textarea id="dDo" rows="3" placeholder="ex. j'ai rangé les cartons en rayon, j'ai étiqueté les prix"></textarea>
+    <label class="small">Mon avis sur la journée</label>
+    <textarea id="dCom" rows="2" placeholder="ex. journée longue, mais j'ai aimé travailler avec l'équipe"></textarea>
+    <label class="small">Photo(s) prise(s) ce jour-là</label>
+    <input type="text" id="dPic" placeholder="ex. la réserve, la machine à étiqueter">
+  </div>
+</section>
+
+<!-- ORAL -->
+<section class="view" id="v-oral">
+  <h2>L'oral avec photos</h2>
+  <p class="muted">Tu présentes ton diaporama devant la classe. Une diapo = une idée + une photo. Durée visée : environ 5 minutes.</p>
+  <div class="card">
+    <h3>Le diaporama en 8 diapos</h3>
+    <div id="slidesBox"></div>
+  </div>
+  <div class="card">
+    <h3>Entraîne-toi avec le chrono</h3>
+    <div class="timer" id="clock">5:00</div>
+    <p class="phase" id="phase">Lance le chrono et présente à voix haute.</p>
+    <div class="row">
+      <button class="btn" id="tStart">Démarrer</button>
+      <button class="btn alt" id="tReset">Remettre à zéro</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Avant de passer, je vérifie</h3>
+    <div id="oralCheck"></div>
+  </div>
+  <div class="card">
+    <h3>Pour que ça passe bien</h3>
+    <ul>
+      <li>Peu de texte sur les diapos : 3 ou 4 mots-clés et la photo. C'est toi qui expliques.</li>
+      <li>Tu regardes la classe, pas l'écran.</li>
+      <li>Tu as le droit d'avoir une petite fiche avec tes mots-clés.</li>
+      <li>Tu peux dire ce que tu n'as pas aimé : ça compte autant que le reste, si tu expliques pourquoi.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section class="view" id="v-notes">
+  <h2>Mes notes</h2>
+  <p class="muted">Tout ce que tu as écrit sur cette page, au même endroit. Copie-le et colle-le dans ton rapport (traitement de texte) ou dans un mail à toi-même.</p>
+  <div class="card">
+    <div class="row" style="justify-content:flex-start">
+      <button class="btn" id="copyAll">Copier toutes mes notes</button>
+      <button class="btn alt" id="clearAll">Tout effacer</button>
+    </div>
+    <div id="clearConfirm" style="display:none;margin-top:12px" class="photo-hint">
+      Effacer toutes tes notes sur cet ordinateur ? Ce n'est pas récupérable.
+      <div class="row" style="justify-content:flex-start;margin-top:8px">
+        <button class="btn" id="clearYes" style="background:var(--a)">Oui, tout effacer</button>
+        <button class="btn alt" id="clearNo">Non</button>
+      </div>
+    </div>
+    <label class="small">Aperçu</label>
+    <textarea id="allNotes" rows="16" readonly></textarea>
+  </div>
+</section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const PARTS = [
+  {id:"intro", t:"Introduction", c:"var(--b)", groups:[
+    ["Comment tu as trouvé ton stage", ["Tu as téléphoné, envoyé un mail, ou tu y es allé en personne ?","Quelqu'un t'a aidé (famille, amis, prof) ?","C'était difficile à trouver ? Combien de refus ?","Il t'a fallu un CV, une lettre ?","Comment s'est passée la première rencontre ?"]],
+    ["Pourquoi cette entreprise", ["C'était ton premier choix ?","Tu as essayé ailleurs ? Où ?","Pourquoi celle-là plutôt qu'une autre ?"]],
+    ["Avant de commencer", ["Qu'est-ce que tu espérais apprendre ?","Ce stage a un lien avec ton projet d'orientation ?","Tu étais stressé, confiant, indifférent ?"]],
+    ["Pour finir l'intro", ["Annonce le plan de ton rapport en une ou deux phrases."]]
+  ], photo:"La façade ou l'enseigne de l'entreprise."},
+  {id:"desc", t:"L'entreprise : description", c:"var(--c)", groups:[
+    ["Où", ["Dans quelle ville, quel quartier (centre-ville, zone industrielle...) ?","Un seul bâtiment ou plusieurs ? Comment sont organisés les locaux ?"]],
+    ["Quel type d'organisation", ["Une entreprise qui vend des produits ou des services ?","Une association ?","Un organisme public (mairie, hôpital, administration...) ?"]],
+    ["Quel secteur", ["Agriculture, bâtiment, commerce, tourisme, hôtellerie-restauration, informatique, santé-social, transport, industrie... ?"]],
+    ["Quelle taille", ["Moins de 10 personnes : microentreprise","Moins de 250 : PME","Moins de 5 000 : ETI","Plus de 5 000 : grande entreprise"]],
+    ["Ce qu'elle propose", ["Quels produits ou services ? (ex. un garage répare des voitures, une boulangerie vend du pain)"]]
+  ], photo:"Un plan des locaux, l'atelier ou le magasin vide, les produits."},
+  {id:"hist", t:"L'entreprise : histoire", c:"var(--d)", groups:[
+    ["Sa création", ["Qui l'a créée ? En quelle année ? Où ?","Pourquoi elle a été créée ?"]],
+    ["Ce qui a changé depuis", ["Il y a plus (ou moins) de salariés qu'avant ?","Elle a ouvert d'autres magasins ou agences, en France ou ailleurs ?"]],
+    ["Ce qu'elle a fait de marquant", ["Des projets spéciaux, des prix, des salons, des événements ?"]]
+  ], photo:"Une vieille photo ou un objet qui raconte l'histoire (si on te l'autorise)."},
+  {id:"fonc", t:"L'entreprise : fonctionnement", c:"var(--e)", groups:[
+    ["L'argent", ["D'où vient l'argent : ventes, subventions, dons ?","Qui sont les clients ou le public ?"]],
+    ["Les gens", ["Combien de personnes y travaillent ?","Quels métiers différents as-tu vus ?","Comment l'entreprise recrute ?"]],
+    ["Les services", ["Quels services (vente, accueil, atelier, compta...) ?","Combien de personnes dans chaque service ? À quoi sert chacun ?"]],
+    ["Comment ils communiquent", ["Mails, messagerie, téléphone, tableau d'affichage ?","Il y a des réunions ? Qui prend les décisions ?"]]
+  ], photo:"Le tableau des plannings, le poste de travail, les tenues ou équipements de sécurité."},
+  {id:"metier", t:"Fiche métier (interview du tuteur)", c:"var(--a)", groups:[
+    ["Questions à poser à ton tuteur sur son métier", ["Quel est votre métier exactement ?","Que faites-vous dans une journée normale ?","Qu'est-ce que vous aimez et n'aimez pas dans ce métier ?","Quelles qualités faut-il pour le faire ?","Combien gagne-t-on en début de carrière ?"]],
+    ["Sur ses études", ["Pourquoi avez-vous choisi ce métier ?","Quelles études ou formations avez-vous suivies ?","Est-ce qu'on peut y arriver par d'autres chemins (CAP, bac pro, apprentissage) ?"]],
+    ["Sur sa place dans l'entreprise", ["Dans quel service travaillez-vous ?","Avec quels autres métiers travaillez-vous ?","Vous pouvez évoluer ? Vers quoi ?"]]
+  ], photo:"Les outils ou le poste de travail du tuteur (sans son visage, sauf s'il est d'accord)."},
+  {id:"concl", t:"Conclusion", c:"var(--ink)", groups:[
+    ["Ce qui t'a surpris", ["Qu'est-ce qui était différent de ce que tu imaginais ? Pourquoi ?"]],
+    ["Ton avis", ["Ce que tu as aimé.","Ce que tu n'as pas aimé.","Au final, c'était intéressant ?"]],
+    ["Ce que tu as appris", ["Qu'est-ce que tu sais faire maintenant que tu ne savais pas avant ?","Ça te servira plus tard ?"]],
+    ["Et ton orientation ?", ["Ce stage confirme ton projet, ou pas du tout ?","Il t'a donné l'idée d'un autre métier ?"]]
+  ], photo:"La photo qui résume le mieux ton stage."}
+];
+
+const PHOTOS = [
+  "La façade ou l'enseigne de l'entreprise",
+  "L'entrée, l'accueil ou le magasin",
+  "Un atelier, un bureau ou une réserve",
+  "Un outil, une machine ou un logiciel que tu as utilisé (sans données à l'écran)",
+  "Une tenue ou un équipement de sécurité",
+  "Un produit fabriqué, vendu ou réparé",
+  "Toi en train de faire une tâche (demande à quelqu'un de te prendre)",
+  "Le poste de travail de ton tuteur",
+  "Un détail qui t'a surpris",
+  "La photo qui résume ton stage"
+];
+
+const SLIDES = [
+  ["Qui je suis, où j'ai fait mon stage","nom de l'entreprise, ville, dates","façade","20 s"],
+  ["Comment j'ai trouvé ce stage","démarches, pourquoi ce choix","accueil","30 s"],
+  ["L'entreprise","ce qu'elle fait, sa taille, son secteur","produits ou locaux","40 s"],
+  ["Comment elle fonctionne","les services, les métiers que j'ai vus","plan ou équipe (avec accord)","40 s"],
+  ["Ce que j'ai vu et fait","2 ou 3 tâches, pas toute la semaine","toi en action, outils","1 min"],
+  ["Le métier de mon tuteur","ce qu'il fait, sa formation","son poste de travail","40 s"],
+  ["Mon avis","ce que j'ai aimé, pas aimé, ce qui m'a surpris","la photo surprise","40 s"],
+  ["Et après ?","ce que ça change pour mon orientation","la photo qui résume","30 s"]
+];
+
+const ORALCHECK = [
+  "J'ai au moins 6 photos nettes",
+  "Chaque diapo a une photo et peu de texte",
+  "J'ai le nom exact de l'entreprise et du métier de mon tuteur",
+  "Je sais expliquer chaque photo en une phrase",
+  "Je me suis chronométré au moins une fois",
+  "J'ai une fiche avec mes mots-clés",
+  "J'ai mis mon diaporama sur une clé ou dans l'ENT"
+];
+
+// stockage
+const KEY="rapportStage3pm";
+let S={};
+try{S=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){S={}}
+S.notes=S.notes||{}; S.photos=S.photos||{}; S.days=S.days||{}; S.oral=S.oral||{};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){} progress();}
+
+// onglets
+const views=["plan","parties","photos","jours","oral","notes"];
+function show(v){
+  if(!views.includes(v)) v="plan";
+  document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));
+  document.querySelectorAll("section.view").forEach(s=>s.classList.toggle("on",s.id==="v-"+v));
+  if(v==="notes") document.getElementById("allNotes").value=buildAll();
+}
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{location.hash=b.dataset.v;show(b.dataset.v)});
+window.addEventListener("hashchange",()=>show(location.hash.slice(1)));
+show(location.hash.slice(1));
+
+// parties
+const pb=document.getElementById("partsBox");
+PARTS.forEach((p,i)=>{
+  const d=document.createElement("details");
+  d.className="card part"; d.style.borderLeftColor=p.c;
+  let h=`<summary><span class="num" style="background:${p.c}">${i+1}</span>${p.t}</summary>`;
+  p.groups.forEach(g=>{h+=`<h3 style="margin-top:16px;font-size:1.05rem">${g[0]}</h3><ul>`+g[1].map(q=>`<li>${q}</li>`).join("")+`</ul>`});
+  h+=`<div class="photo-hint">📸 <b>Photo possible :</b> ${p.photo}</div>`;
+  h+=`<label class="small">Mes réponses</label><textarea rows="5" data-k="${p.id}" placeholder="Écris en vrac, tu mettras en forme après."></textarea>`;
+  d.innerHTML=h; pb.appendChild(d);
+});
+pb.querySelectorAll("textarea").forEach(t=>{
+  t.value=S.notes[t.dataset.k]||"";
+  t.oninput=()=>{S.notes[t.dataset.k]=t.value;save()};
+});
+
+// photos
+const phb=document.getElementById("photoBox");
+PHOTOS.forEach((p,i)=>{
+  const l=document.createElement("label"); l.className="check";
+  l.innerHTML=`<input type="checkbox" data-i="${i}"><span>${p}</span>`;
+  const c=l.querySelector("input"); c.checked=!!S.photos[i]; l.classList.toggle("done",c.checked);
+  c.onchange=()=>{S.photos[i]=c.checked;l.classList.toggle("done",c.checked);save()};
+  phb.appendChild(l);
+});
+
+// jours
+let cur=1; const db=document.getElementById("daysBtns");
+const F=["dObs","dDo","dCom","dPic"];
+for(let i=1;i<=5;i++){const b=document.createElement("button");b.textContent="Jour "+i;b.onclick=()=>{cur=i;loadDay()};db.appendChild(b)}
+function loadDay(){
+  [...db.children].forEach((b,i)=>b.classList.toggle("on",i+1===cur));
+  const d=S.days[cur]||{}; F.forEach(f=>document.getElementById(f).value=d[f]||"");
+}
+F.forEach(f=>document.getElementById(f).oninput=e=>{S.days[cur]=S.days[cur]||{};S.days[cur][f]=e.target.value;save()});
+loadDay();
+
+// diapos
+document.getElementById("slidesBox").innerHTML=SLIDES.map((s,i)=>
+  `<div class="slide"><span class="n">${i+1}</span><div style="flex:1"><b>${s[0]}</b><br><span class="muted">${s[1]}</span><br>📸 ${s[2]}</div><span class="t">${s[3]}</span></div>`).join("");
+
+// checklist oral
+const oc=document.getElementById("oralCheck");
+ORALCHECK.forEach((p,i)=>{
+  const l=document.createElement("label"); l.className="check";
+  l.innerHTML=`<input type="checkbox"><span>${p}</span>`;
+  const c=l.querySelector("input"); c.checked=!!S.oral[i]; l.classList.toggle("done",c.checked);
+  c.onchange=()=>{S.oral[i]=c.checked;l.classList.toggle("done",c.checked);save()};
+  oc.appendChild(l);
+});
+
+// chrono
+const TOTAL=300; let left=TOTAL, tick=null;
+const clock=document.getElementById("clock"), phase=document.getElementById("phase"), tS=document.getElementById("tStart");
+const marks=[[300,"Diapo 1 : qui je suis, où"],[280,"Diapo 2 : comment j'ai trouvé"],[250,"Diapo 3 : l'entreprise"],[210,"Diapo 4 : son fonctionnement"],[170,"Diapo 5 : ce que j'ai vu et fait"],[110,"Diapo 6 : le métier du tuteur"],[70,"Diapo 7 : mon avis"],[30,"Diapo 8 : et après ?"]];
+function render(){
+  const a=Math.abs(left), m=Math.floor(a/60), s=String(a%60).padStart(2,"0");
+  clock.textContent=(left<0?"+":"")+m+":"+s;
+  clock.style.color=left<0?"var(--a)":left<=30?"var(--d)":"var(--ink)";
+  if(tick){ if(left<0) phase.textContent="Temps dépassé : conclus !"; else { const mk=marks.filter(x=>left<=x[0]).pop(); phase.textContent=mk?mk[1]:""; } }
+}
+tS.onclick=()=>{
+  if(tick){clearInterval(tick);tick=null;tS.textContent="Reprendre";return}
+  tS.textContent="Pause"; tick=setInterval(()=>{left--;render()},1000); render();
+};
+document.getElementById("tReset").onclick=()=>{clearInterval(tick);tick=null;left=TOTAL;tS.textContent="Démarrer";phase.textContent="Lance le chrono et présente à voix haute.";render()};
+
+// progression
+function progress(){
+  const n=PARTS.filter(p=>(S.notes[p.id]||"").trim().length>20).length;
+  const ph=PHOTOS.filter((_,i)=>S.photos[i]).length;
+  const dy=[1,2,3,4,5].filter(i=>S.days[i]&&Object.values(S.days[i]).join("").trim()).length;
+  const or=ORALCHECK.filter((_,i)=>S.oral[i]).length;
+  const pct=Math.round(100*(n/6*0.4 + Math.min(ph,6)/6*0.2 + dy/5*0.2 + or/ORALCHECK.length*0.2));
+  document.getElementById("progBar").style.width=pct+"%";
+  document.getElementById("progTxt").textContent=`${pct} % fait · ${n}/6 parties commencées · ${ph} photos · ${dy}/5 jours notés · oral ${or}/${ORALCHECK.length}`;
+  document.getElementById("photoBar").style.width=Math.min(100,ph/6*100)+"%";
+  document.getElementById("photoTxt").textContent=ph>=6?`${ph} photos : c'est bon pour l'oral.`:`${ph} sur 6 minimum.`;
+}
+progress();
+
+// export
+function buildAll(){
+  let t="Mon rapport de stage : mes notes\n\n";
+  PARTS.forEach((p,i)=>{t+=`== ${i+1}. ${p.t} ==\n${(S.notes[p.id]||"(vide)").trim()}\n\n`});
+  t+="== Déroulé du stage, jour par jour ==\n";
+  for(let i=1;i<=5;i++){const d=S.days[i]; if(!d) continue;
+    t+=`\nJour ${i}\n- Observé : ${d.dObs||""}\n- Fait : ${d.dDo||""}\n- Mon avis : ${d.dCom||""}\n- Photos : ${d.dPic||""}\n`}
+  t+="\n== Photos prises ==\n"+PHOTOS.map((p,i)=>(S.photos[i]?"[x] ":"[ ] ")+p).join("\n");
+  return t;
+}
+const toast=m=>{const e=document.getElementById("toast");e.textContent=m;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),2000)};
+document.getElementById("copyAll").onclick=async()=>{
+  const ta=document.getElementById("allNotes"); ta.value=buildAll();
+  try{await navigator.clipboard.writeText(ta.value);toast("Notes copiées")}
+  catch(e){ta.select();toast("Sélectionné : fais Ctrl+C")}
+};
+const cc=document.getElementById("clearConfirm");
+document.getElementById("clearAll").onclick=()=>cc.style.display="block";
+document.getElementById("clearNo").onclick=()=>cc.style.display="none";
+document.getElementById("clearYes").onclick=()=>{try{localStorage.removeItem(KEY)}catch(e){} location.reload()};
+</script>
+</body>
+</html>
